@@ -150,22 +150,22 @@ def render_grid(grid: List[List[str]], path: List[Tuple[int,int]] = None, player
         if 0 <= pr < rows and 0 <= pc < cols:
             show[pr][pc] = '@'
     if RICH:
-        t = Text()
-        for r in range(rows):
-            for c in range(cols):
-                ch = show[r][c]
-                if ch == '#':
-                    t.append('█', style="on #0f2540")   # dark wall block
-                elif ch == ' ':
-                    t.append(' ', style="on #071725")
-                elif ch == '.':
-                    t.append('.', style="bold magenta on #071725")
-                elif ch == '@':
-                    t.append('@', style="bold yellow on #071725")
-                else:
-                    t.append(ch)
-            t.append('\n')
-        console.print(t, end='')
+    t = Text()
+    for r in range(rows):
+        for c in range(cols):
+            ch = show[r][c]
+            if (r, c) == (1, 1):  # start
+                t.append("S", style="bold green")
+            elif (r, c) == (rows-2, cols-2):  # goal
+                t.append("G", style="bold red")
+            elif ch == '#':
+                t.append('█', style="grey50")
+            elif ch == '.':
+                t.append('·', style="yellow")
+            else:
+                t.append(' ')
+        t.append('\n')
+    console.print(t, end='')
     else:
         out = '\n'.join(''.join(row) for row in show)
         print(out)
